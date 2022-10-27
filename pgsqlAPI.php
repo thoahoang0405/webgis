@@ -11,7 +11,8 @@
             $aResult = getGeoCMRToAjax($paPDO, $paSRID, $paPoint);
         else if ($functionname == 'getInfoCMRToAjax')
             $aResult = getInfoCMRToAjax($paPDO, $paSRID, $paPoint);
-     
+        else if ($functionname == 'getBv')
+            $aResult=getBv($paPDO, $paSRID, $paPoint);
         echo $aResult;
     
         closeDB($paPDO);
@@ -94,6 +95,25 @@
         else
             return "null";
     }
+    function getBuffe($paPDO,$paSRID,$paPoint)
+    {
+      
+        $paPoint = str_replace(',', ' ', $paPoint);
+        
+        $mySQLStr = "SELECT  ST_AsGeoJson(ST_Buffer('SRID=".$paSRID.";".$paPoint."'::geometry,1)) as geo from \"benhvien\" limit 1";
+       
+        $result = query($paPDO, $mySQLStr);
+        
+        if ($result != null)
+        {
+            // Lặp kết quả
+            foreach ($result as $item){
+                return $item['geo'];
+            }
+        }
+        else
+            return "null";
+    }
     /**
      * lấy ra thông tin vùng có point được chọn
      */
@@ -125,6 +145,50 @@
         }
         else
             return "chưa có thông tin";
+    }
+    function getBv($paPDO,$paSRID,$paPoint)
+    {
+        
+        $paPoint = str_replace(',', ' ', $paPoint);
+       
+        $mySQLStr =  "SELECT benhvien.gid,  benhvien.name ,  benhvien.addr_stree
+        from  \"benhvien\" 
+        where  ST_Distance('SRID=".$paSRID.";".$paPoint."'::geometry,geom)<0.01 ";
+
+        
+        $result = query($paPDO, $mySQLStr);
+        
+                 
+        if ($result != null)
+        {   
+            $resFin = '
+            <table class="table">
+  <thead>
+    <tr>
+    <th scope="col" colspan="1" style="min-width: 70px">id</th>
+      <th scope="col" colspan="2" style="min-width: 200px" >Tên Bệnh viện</th>
+      <th scope="col" colspan="3" style="min-width: 200px; ">Địa Chỉ</th>
+    
+    </tr>
+  </thead>
+  <tbody>'; 
+            
+             foreach ($result as $value){
+                 $resFin = $resFin.'<tr>
+                 <td colspan="1" style="min-width: 70px;"class="trId">'.$value['gid'].'</td>';
+                 $resFin = $resFin.'<td colspan="2" style="min-width: 200px">'.$value['name'].'</td>';
+                 $resFin = $resFin.'<td colspan="3" style="min-width: 200px">'.$value['addr_stree'].'</td>
+                
+                 </tr>';
+            //     $resFin = $resFin.'<br>'; 
+             }
+             $resFin = $resFin.'</tbody>
+             </table>'; 
+            
+             echo $resFin;
+        }
+        else
+            echo "không tìm thấy kết quả";
     }
    
     /**
@@ -160,9 +224,8 @@
         $paPDO = initDB();
         $mySQLStr = "SELECT benhvien.gid,  benhvien.name ,  benhvien.addr_stree
             from  \"benhvien\" 
-            where benhvien.name like '%$search%' limit 5";
-        //echo $mySQLStr;
-        //echo "<br><br>";
+            where benhvien.name like '%$search%'";
+     
         $result = query($paPDO, $mySQLStr);
        
                
@@ -182,7 +245,7 @@
             
              foreach ($result as $value){
                  $resFin = $resFin.'<tr>
-                 <td colspan="1" style="min-width: 70px;" class="trId">'.$value['gid'].'</td>';
+                 <td colspan="1" style="min-width: 70px;"class="trId">'.$value['gid'].'</td>';
                  $resFin = $resFin.'<td colspan="2" style="min-width: 200px">'.$value['name'].'</td>';
                  $resFin = $resFin.'<td colspan="3" style="min-width: 200px">'.$value['addr_stree'].'</td>
                 
