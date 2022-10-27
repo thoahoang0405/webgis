@@ -31,12 +31,25 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+  body {
+    background-color: #bbf9ea;
+}
+.form_data{
+        padding: 3rem;
+        width: 100%;
+        height: 80vh;
+        margin-left: 100%;
+        margin-top : 150px;
+} 
+</style>
 </head>
 <body>
 
-<div class="container">
-  <h2>Login Here </h2>
-  <form method="post">
+<div class="container" style="m;">
+<div class="col-lg-4 col-md-8 col-sm-10 col-12 mx-lg-auto mx-md-auto mx-5m-auto mx-auto pa">
+  <form method="post" class ="form_data" >
+  <h2>Đăng Nhập</h2>
   
      
     <div class="form-group">
