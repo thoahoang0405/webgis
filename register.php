@@ -24,18 +24,31 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>PHP PostgreSQL Registration & Login Example </title>
+  <title>Đăng ký </title>
   <meta name="keywords" content="PHP,PostgreSQL,Insert,Login">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+    body {
+        background:#bbf9ea;
+    }
+    .form__data{
+        padding: 3rem;
+        width: 100%;
+        height: 80vh;
+        margin-left: 100%;
+    }
+    
+  </style>
 </head>
 <body>
-
 <div class="container">
-  <h2>Register Here </h2>
-  <form method="post">
+    <div class="col-lg-4 col-md-8 col-sm-10 col-12 mx-lg-auto mx-md-auto mx-5m-auto mx-auto">
   
+  <form method="post" class="form__data">
+  <h2>Đăng Ký </h2>
     <div class="form-group">
       <label for="name">Name:</label>
       <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" requuired>
@@ -56,8 +69,9 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
       <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
     </div>
      
-    <input type="submit" name="submit" class="btn btn-primary" value="Submit">
+    <input type="submit" name="submit" class="btn btn-primary" value="Đăng Ký">
   </form>
+  </div>
 </div>
 
 </body>
