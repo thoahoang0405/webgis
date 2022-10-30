@@ -167,7 +167,9 @@
 <body onload="initialize_map();">
     <div class="container">
         <h1 class="header">Bản đồ bệnh viện trong TP Hà Nội</h1>
-
+        <a href="../../webgis/login.php"><button class="search" style="height: 30px;position: absolute;
+    right: 0px; margin-top: 5px;">ĐĂNG XUẤT</button></a>
+             </a>
         <div class="main">
             <div id="map" class="map">
 
