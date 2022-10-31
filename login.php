@@ -62,9 +62,13 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
       <label for="pwd">Mật khẩu:</label>
       <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
     </div>
+    
      
     <input type="submit" name="submit" class="btn btn-primary" value="Đăng nhập">
+<<<<<<< HEAD
     <a style="text-decoration:none;" href="./register.php">Đăng kí</a>
+=======
+>>>>>>> e427c49648cbd59e712d673cfac80bf57bc9f20c
   </form>
 
  

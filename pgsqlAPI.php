@@ -58,7 +58,6 @@
    
     function getResult($paPDO,$paSRID,$paPoint)
     {
-       
         $paPoint = str_replace(',', ' ', $paPoint);
 
         $mySQLStr = "SELECT ST_AsGeoJson(geom) as geo from \"benhvien\" where ST_Within('SRID=".$paSRID.";".$paPoint."'::geometry,geom)";
