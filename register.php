@@ -32,7 +32,7 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
 
   <style>
     body {
-        background:#bbf9ea;
+        background:#daf5ee;
     }
     .form__data{
         padding: 3rem;
@@ -70,6 +70,7 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
     </div>
      
     <input type="submit" name="submit" class="btn btn-primary" value="Đăng Ký">
+    <a href="login.php"  style="margin-left: 130px"> Đăng nhập</a>
   </form>
   </div>
 </div>

@@ -33,7 +33,7 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
   body {
-    background-color: #bbf9ea;
+    background-color: #daf5ee;
 }
 .form_data{
         padding: 3rem;
@@ -62,8 +62,9 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
       <label for="pwd">Password:</label>
       <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
     </div>
+    
      
-    <input type="submit" name="submit" class="btn btn-primary" value="Submit">
+    <input type="submit" name="submit" class="btn btn-primary" value="Đăng nhập">
   </form>
 </div>
 
