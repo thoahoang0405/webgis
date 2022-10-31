@@ -186,7 +186,7 @@
                 <div class="searchResult">
 
                 </div>
-            
+
                 <button title="xem tất cả bệnh viện trên bản đồ" id="all">Xem tất cả</button><button id="btnReset">Làm mới</button>
                 <br>
 
@@ -194,7 +194,7 @@
 
                 <input type="checkbox" style="margin: 8px" id="title-search" value="1">Bệnh viện gần vị trí bạn chọn
                 <div id="kq_bv"></div>
-                    <button id="xem" title="xem kết quả trên bản đồ">xem</button> 
+            
             </div>
 
         </div>
@@ -208,15 +208,15 @@
         var format = 'image/png';
         var map;
         var minX = 104.671219482422;
-            var minY = 18.6605095458984;
-            var maxX = 107.023750305176;
-            var maxY = 23.38938331604;
-            var cenX = (minX + maxX) / 2;
-            var cenY = (minY + maxY) / 2;
-            var mapLat = cenY;
-            var mapLng = cenX;
-            var mapDefaultZoom = 15;
-        
+        var minY = 18.6605095458984;
+        var maxX = 107.023750305176;
+        var maxY = 23.38938331604;
+        var cenX = (minX + maxX) / 2;
+        var cenY = (minY + maxY) / 2;
+        var mapLat = cenY;
+        var mapLng = cenX;
+        var mapDefaultZoom = 15;
+
 
         function initialize_map() {
             //*
@@ -294,24 +294,14 @@
                 return styles[feature.getGeometry().getType()];
             };
 
-            var stylePoint = new ol.style.Style({
-                image: new ol.style.Icon({
-                    anchor: [0.5, 0.5],
-                    anchorXUnits: "fraction",
-                    anchorYUnits: "fraction",
-                    src: "http://localhost/WebGIS_7//Yellow_dot.svg"
-                })
-            });
 
             var vectorLayer = new ol.layer.Vector({
                 //source: vectorSource,
                 style: styleFunction
             });
-            var vt = new ol.layer.Vector({
-                style: stylePoint
-            })
+          
             map.addLayer(vectorLayer);
-            map.addLayer(vt);
+         
             $("#btnReset").click(function() {
                 location.reload()
             })
@@ -417,9 +407,7 @@
                         },
                         success: function(result) {
                             highLightObj(result);
-
-
-
+                            
                         },
                         error: function(req, status, error) {
                             alert(req + " " + status + " " + error);
@@ -444,10 +432,8 @@
                         },
                         success: function(result) {
                             displaySearch(result);
-                         
+
                             dis();
-
-
                         },
                         error: function(req, status, error) {
                             alert(req + " " + status + " " + error);
@@ -455,10 +441,8 @@
                     });
                 }
 
-                // $("#xem").click(function() {
-
-
             })
+           
 
             map.on('singleclick', function(evt) {
                 vectorLayer.setStyle(styleFunction);
@@ -478,7 +462,7 @@
                     },
                     success: function(result, status, erro) {
                         displayObjInfo(result, evt.coordinate);
-                       
+
 
 
                     },
@@ -502,12 +486,12 @@
                     }
                 });
             });
-           
+
             document.getElementById('title-search').onclick = function(e) {
                 if (this.checked) {
                     map.on('singleclick', function(evt) {
-                        vt.setStyle(stylePoint);
-                        vectorLayer.setStyle(stylePoint);
+
+                       
 
                         var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 
@@ -529,27 +513,28 @@
                                 displaySearch2(result)
                                 $(".trId2").click(function() {
 
-                                a = $(this).html()
-                                alert(a)
-                                $.ajax({
+                                    b = $(this).html()
+
+
+                                    $.ajax({
                                         type: "POST",
                                         url: "pgsqlAPI.php",
 
                                         data: {
-                                            id:a
+                                            id: b
                                         },
                                         success: function(result) {
-                                            highLightObj(result);
-                                            
-                                        },
+                                        highLightObj(result);
+                                    },
                                         error: function(req, status, error) {
                                             alert(req + " " + status + " " + error);
                                         }
                                     });
+                                    
 
-                                })
-                               
-                               
+                                    })
+
+
                             },
                             error: function(req, status, error) {
                                 alert(req + " " + status + " " + error);

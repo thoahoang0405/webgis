@@ -1,9 +1,9 @@
 <?php
 $host = "localhost";
-$port = "5432";
+$port = "5433";
 $dbname = "benhvien";
 $user = "postgres";
-$password = "1"; 
+$password = "12345"; 
 $connection_string = "host={$host} port={$port} dbname={$dbname} user={$user} password={$password} ";
 $dbconn = pg_connect($connection_string);
 if(isset($_POST['submit'])&&!empty($_POST['submit'])){
@@ -32,7 +32,7 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
 
   <style>
     body {
-        background:#bbf9ea;
+        background:#daf5ee;
     }
     .form__data{
         padding: 3rem;
@@ -50,23 +50,23 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
   <form method="post" class="form__data">
   <h2>Đăng Ký </h2>
     <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" requuired>
+      <label for="name">Tên:</label>
+      <input type="text" class="form-control" id="name" placeholder="Nhập tên" name="name" requuired>
     </div>
     
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      <input type="email" class="form-control" id="email" placeholder="Nhập email" name="email">
     </div>
     
     <div class="form-group">
-      <label for="pwd">Mobile No:</label>
-      <input type="number" class="form-control" maxlength="10" id="mobileno" placeholder="Enter Mobile Number" name="mobno">
+      <label for="pwd">Số điện thoại:</label>
+      <input type="number" class="form-control" maxlength="10" id="mobileno" placeholder="Nhập số điện thoại" name="mobno">
     </div>
     
     <div class="form-group">
-      <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+      <label for="pwd">Mật khẩu:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Nhập mật khẩu" name="pwd">
     </div>
      
     <input type="submit" name="submit" class="btn btn-primary" value="Đăng Ký">

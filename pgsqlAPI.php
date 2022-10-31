@@ -5,6 +5,7 @@
         $paSRID = '4326';
         $paPoint = $_POST['paPoint'];
         $functionname = $_POST['functionname'];
+      
         
         $aResult = "null";
         if ($functionname == 'getGeoCMRToAjax')
@@ -13,6 +14,7 @@
             $aResult = getInfoCMRToAjax($paPDO, $paSRID, $paPoint);
         else if ($functionname == 'getBv')
             $aResult=getBv($paPDO, $paSRID, $paPoint);
+       
         echo $aResult;
     
         closeDB($paPDO);
@@ -21,7 +23,7 @@
     function initDB()
     {
         // Kết nối CSDL
-        $paPDO = new PDO('pgsql:host=localhost;dbname=benhvien;port=5432', 'postgres', '1');
+        $paPDO = new PDO('pgsql:host=localhost;dbname=benhvien;port=5433', 'postgres', '12345');
         return $paPDO;
     }
     function query($paPDO, $paSQLStr)
@@ -95,25 +97,9 @@
         else
             return "null";
     }
-    function getBuffe($paPDO,$paSRID,$paPoint)
-    {
-      
-        $paPoint = str_replace(',', ' ', $paPoint);
-        
-        $mySQLStr = "SELECT  ST_AsGeoJson(ST_Buffer('SRID=".$paSRID.";".$paPoint."'::geometry,1)) as geo from \"benhvien\" limit 1";
-       
-        $result = query($paPDO, $mySQLStr);
-        
-        if ($result != null)
-        {
-            // Lặp kết quả
-            foreach ($result as $item){
-                return $item['geo'];
-            }
-        }
-        else
-            return "null";
-    }
+
+
+    
     /**
      * lấy ra thông tin vùng có point được chọn
      */
@@ -153,7 +139,7 @@
        
         $mySQLStr =  "SELECT benhvien.gid,  benhvien.name ,  benhvien.addr_stree
         from  \"benhvien\" 
-        where  ST_Distance('SRID=".$paSRID.";".$paPoint."'::geometry,geom)<0.01 ";
+        where  ST_Distance('SRID=".$paSRID.";".$paPoint."'::geometry,geom)<0.005 ";
 
         
         $result = query($paPDO, $mySQLStr);
@@ -168,16 +154,16 @@
     <th scope="col" colspan="1" style="min-width: 70px">id</th>
       <th scope="col" colspan="2" style="min-width: 200px" >Tên Bệnh viện</th>
       <th scope="col" colspan="3" style="min-width: 200px; ">Địa Chỉ</th>
-    
     </tr>
   </thead>
   <tbody>'; 
             
              foreach ($result as $value){
                  $resFin = $resFin.'<tr>
-                 <td colspan="1" style="min-width: 70px;"class="trId">'.$value['gid'].'</td>';
+                 <td colspan="1" style="min-width: 70px;"class="trId2">'.$value['gid'].'</td>';
                  $resFin = $resFin.'<td colspan="2" style="min-width: 200px">'.$value['name'].'</td>';
-                 $resFin = $resFin.'<td colspan="3" style="min-width: 200px">'.$value['addr_stree'].'</td>
+               
+                 $resFin = $resFin.'<td colspan="3" style="min-width: 200px">'.$value['name'].'</td>
                 
                  </tr>';
             //     $resFin = $resFin.'<br>'; 

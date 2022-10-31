@@ -1,9 +1,9 @@
 <?php
 $host = "localhost";
-$port = "5432";
+$port = "5433";
 $dbname = "benhvien";
 $user = "postgres";
-$password = "1"; 
+$password = "12345"; 
 $connection_string = "host={$host} port={$port} dbname={$dbname} user={$user} password={$password} ";
 $dbconn = pg_connect($connection_string);
 if(isset($_POST['submit'])&&!empty($_POST['submit'])){
@@ -33,7 +33,7 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
   body {
-    background-color: #bbf9ea;
+    background-color: #daf5ee;
 }
 .form_data{
         padding: 3rem;
@@ -46,7 +46,7 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
 </head>
 <body>
 
-<div class="container" style="m;">
+<div class="container" >
 <div class="col-lg-4 col-md-8 col-sm-10 col-12 mx-lg-auto mx-md-auto mx-5m-auto mx-auto pa">
   <form method="post" class ="form_data" >
   <h2>Đăng Nhập</h2>
@@ -59,12 +59,15 @@ if(isset($_POST['submit'])&&!empty($_POST['submit'])){
     
      
     <div class="form-group">
-      <label for="pwd">Password:</label>
+      <label for="pwd">Mật khẩu:</label>
       <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
     </div>
      
-    <input type="submit" name="submit" class="btn btn-primary" value="Submit">
+    <input type="submit" name="submit" class="btn btn-primary" value="Đăng nhập">
+    <a style="text-decoration:none;" href="./register.php">Đăng kí</a>
   </form>
+
+ 
 </div>
 
 </body>
