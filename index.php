@@ -171,10 +171,7 @@
         <div class="main">
             <div id="map" class="map">
 
-                <!-- <div id="popup" class="ol-popup">
-                    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-                    <div id="popup-content"></div>
-                </div> -->
+
                 <div id="info"></div>
 
             </div>
@@ -189,13 +186,15 @@
                 <div class="searchResult">
 
                 </div>
-                <button id="xem" title="xem kết quả trên bản đồ">xem</button> <button title="xem tất cả bệnh viện trên bản đồ" id="all">Xem tất cả</button><button id="btnReset">Làm mới</button>
+            
+                <button title="xem tất cả bệnh viện trên bản đồ" id="all">Xem tất cả</button><button id="btnReset">Làm mới</button>
                 <br>
 
                 <div id="kq"></div>
-                <!-- <input id="title-search" value="1" type="checkbox />Hãy chọn vị trí của bạn trên bản đồ để tìm bệnh viện gần nhất -->
+
                 <input type="checkbox" style="margin: 8px" id="title-search" value="1">Bệnh viện gần vị trí bạn chọn
                 <div id="kq_bv"></div>
+                    <button id="xem" title="xem kết quả trên bản đồ">xem</button> 
             </div>
 
         </div>
@@ -208,17 +207,16 @@
         //$("#document").ready(function () {
         var format = 'image/png';
         var map;
-
         var minX = 104.671219482422;
-        var minY = 18.6605095458984;
-        var maxX = 107.023750305176;
-        var maxY = 23.38938331604;
-        var cenX = (minX + maxX) / 2;
-        var cenY = (minY + maxY) / 2;
-        var mapLat = cenY;
-        var mapLng = cenX;
-        var mapDefaultZoom = 15;
-
+            var minY = 18.6605095458984;
+            var maxX = 107.023750305176;
+            var maxY = 23.38938331604;
+            var cenX = (minX + maxX) / 2;
+            var cenY = (minY + maxY) / 2;
+            var mapLat = cenY;
+            var mapLng = cenX;
+            var mapDefaultZoom = 15;
+        
 
         function initialize_map() {
             //*
@@ -309,8 +307,8 @@
                 //source: vectorSource,
                 style: styleFunction
             });
-            var vt= new ol.layer.Vector({
-                style:stylePoint
+            var vt = new ol.layer.Vector({
+                style: stylePoint
             })
             map.addLayer(vectorLayer);
             map.addLayer(vt);
@@ -404,10 +402,33 @@
 
             }
 
-            $(".trBody").click(function() {
-                console.log(a)
-                console.log(td[0].innerHTML)
-            })
+            function dis() {
+
+                $(".trId").click(function() {
+
+                    a = $(this).html()
+
+                    $.ajax({
+                        type: "POST",
+                        url: "pgsqlAPI.php",
+
+                        data: {
+                            id: a
+                        },
+                        success: function(result) {
+                            highLightObj(result);
+
+
+
+                        },
+                        error: function(req, status, error) {
+                            alert(req + " " + status + " " + error);
+                        }
+                    });
+                })
+
+            }
+
             $(".btnSearch").click(function() {
                 if ($('#search').val() == "") {
                     $("#error").html("nhập tên bệnh viện cần tìm")
@@ -423,7 +444,9 @@
                         },
                         success: function(result) {
                             displaySearch(result);
-                            console.log(result)
+                         
+                            dis();
+
 
                         },
                         error: function(req, status, error) {
@@ -432,25 +455,8 @@
                     });
                 }
 
-                $("#xem").click(function() {
-                    a = $(".trId").html()
-                    $.ajax({
-                        type: "POST",
-                        url: "pgsqlAPI.php",
+                // $("#xem").click(function() {
 
-                        data: {
-                            id: a
-                        },
-                        success: function(result) {
-                            highLightObj(result);
-
-
-                        },
-                        error: function(req, status, error) {
-                            alert(req + " " + status + " " + error);
-                        }
-                    });
-                })
 
             })
 
@@ -461,6 +467,7 @@
                 var lon = lonlat[0];
                 var lat = lonlat[1];
                 var myPoint = 'POINT(' + lon + ' ' + lat + ')';
+                console.log(lonlat)
 
                 $.ajax({
                     type: "POST",
@@ -471,6 +478,9 @@
                     },
                     success: function(result, status, erro) {
                         displayObjInfo(result, evt.coordinate);
+                       
+
+
                     },
                     error: function(req, status, error) {
                         alert(req + " " + status + " " + error);
@@ -492,20 +502,20 @@
                     }
                 });
             });
-
+           
             document.getElementById('title-search').onclick = function(e) {
                 if (this.checked) {
                     map.on('singleclick', function(evt) {
                         vt.setStyle(stylePoint);
-                       vectorLayer.setStyle(stylePoint);
-                      
+                        vectorLayer.setStyle(stylePoint);
+
                         var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-                    
+
                         var lon = lonlat[0];
                         var lat = lonlat[1];
                         var myPoint = 'POINT(' + lon + ' ' + lat + ')';
-                   
-                       
+
+
                         $.ajax({
 
                             type: "POST",
@@ -516,10 +526,30 @@
                                 paPoint: myPoint
                             },
                             success: function(result, status, erro) {
-
-
                                 displaySearch2(result)
-                                console.log(result)
+                                $(".trId2").click(function() {
+
+                                a = $(this).html()
+                                alert(a)
+                                $.ajax({
+                                        type: "POST",
+                                        url: "pgsqlAPI.php",
+
+                                        data: {
+                                            id:a
+                                        },
+                                        success: function(result) {
+                                            highLightObj(result);
+                                            
+                                        },
+                                        error: function(req, status, error) {
+                                            alert(req + " " + status + " " + error);
+                                        }
+                                    });
+
+                                })
+                               
+                               
                             },
                             error: function(req, status, error) {
                                 alert(req + " " + status + " " + error);
@@ -527,7 +557,7 @@
                         });
 
                     })
-                }else{
+                } else {
                     location.reload();
                 }
 
